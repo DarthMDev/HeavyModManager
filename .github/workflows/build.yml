@@ -57,12 +57,10 @@ jobs:
         run: |
           chmod +x ./scripts/build-macos.sh
           ./scripts/build-macos.sh Release osx-arm64
-          ditto -c -k --keepParent "publish/Heavy Mod Manager.app" "publish/HeavyModManager-macOS-arm64.zip"
 
       - name: Build macOS Application Bundle (Intel)
         run: |
           ./scripts/build-macos.sh Release osx-x64
-          ditto -c -k --keepParent "publish/Heavy Mod Manager.app" "publish/HeavyModManager-macOS-x64.zip"
 
       - name: Upload macOS App Artifacts
         uses: actions/upload-artifact@v4

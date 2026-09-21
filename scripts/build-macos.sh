@@ -28,7 +28,7 @@ echo "--> Publishing .NET project..."
 dotnet publish "${ROOT_DIR}/HeavyModManager.Desktop/HeavyModManager.Desktop.csproj" \
     -c "${CONFIGURATION}" \
     -r "${RID}" \
-    --self-contained false \
+    --self-contained true \
     -o "${MACOS_DIR}"
 
 echo "--> Generating macOS AppIcon.icns..."
@@ -94,5 +94,10 @@ echo "--> Performing ad-hoc codesigning..."
 xattr -cr "${APP_BUNDLE}"
 codesign --force --deep --sign - "${APP_BUNDLE}"
 
+ZIP_NAME="HeavyModManager-macOS-${RID#osx-}.zip"
+echo "--> Creating distribution zip (${ZIP_NAME})..."
+ditto -c -k --keepParent "${APP_BUNDLE}" "${OUTPUT_DIR}/${ZIP_NAME}"
+
 echo "=== Build Complete! ==="
 echo "Application Bundle created at: ${APP_BUNDLE}"
+echo "Distribution Zip created at:   ${OUTPUT_DIR}/${ZIP_NAME}"
